@@ -15,7 +15,10 @@ struct ImuData
 	float & my() { return values[7]; }
 	float & mz() { return values[8]; }
 
+	bool & ok() { return state; }
+	
 	float values[9];
+	bool state;
 };
 
 #endif

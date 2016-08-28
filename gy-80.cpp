@@ -51,23 +51,24 @@ ImuData Gy80::sense()
 	int m = magn.measure(filterInput.mx(), filterInput.my(), filterInput.mz()); //mGauss
 
 	ImuData error;
+	error.ok() = true;
 
 	if (a < 0)
 	{
-		error.ax() = -1.0f;
+		error.ok() = false;
 	}
 	
 	if (g < 0)
 	{
-		error.ay() = -1.0f;
+		error.ok() = false;
 	}
 	
 	if (m < 0)
 	{
-		error.az() = -1.0f;
+		error.ok() = false;
 	}
 	
-	if (a < 0 || g < 0 || m < 0)
+	if (!error.ok())
 	{
 		return error;
 	}
@@ -106,6 +107,7 @@ ImuData Gy80::sense()
 	roll  *= 180.0f / PI;
 	
 	ImuData result;
+	result.ok() = true;
 	
 	result.ax() = yaw;
 	result.ay() = pitch;
